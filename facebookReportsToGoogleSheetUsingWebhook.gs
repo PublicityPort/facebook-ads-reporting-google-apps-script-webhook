@@ -2,16 +2,16 @@ function doGet(e){
 const accountId=String(e.parameter.accountId);
 const spreadSheetUrl=String(e.parameter.spreadSheetUrl);
 const sheetName=String(e.parameter.sheetName);
-
+const authKey=String(e.parameter.authKey);
 if (sheetName){
-requestGetFacebookReport(accountId,spreadSheetUrl,sheetName);
-return ContentService.createTextOutput('OK FACEBOOK REPORT GENERATED');
+requestGetFacebookReport(accountId,spreadSheetUrl,sheetName,authKey);
+return ContentService.createTextOutput('OK');
 }
 }
 
 // DO NOT MODIFY ANYTHING BELOW //
 
-function requestGetFacebookReport(accountId,spreadSheetUrl,sheetName){
+function requestGetFacebookReport(accountId, spreadSheetUrl, sheetName,authKey){
         
       // ad account ID
   var AD_ACCOUNT_ID = accountId;
@@ -26,8 +26,7 @@ function requestGetFacebookReport(accountId,spreadSheetUrl,sheetName){
   const DATE_RANGE = 'lifetime'
   
   // user access token linked to a Facebook app
-  const TOKEN = ''
-  
+  var TOKEN=authKey;
   // number of days from 1 to 90
   const TIME_INCREMENT = '1'
   
@@ -38,9 +37,8 @@ function requestGetFacebookReport(accountId,spreadSheetUrl,sheetName){
   var SPREADSHEET_URL =spreadSheetUrl;
 
   // name of the sheet where the report will be
-  var TAB_NAME =sheetName;
-
-
+  var TAB_NAME =sheetName;  
+  
   // Builds the Facebook Ads Insights API URL
   const facebookUrl = `https://graph.facebook.com/v7.0/act_${AD_ACCOUNT_ID}/insights?level=${LEVEL}&fields=${FIELDS}&date_preset=${DATE_RANGE}&access_token=${TOKEN}&time_increment=${TIME_INCREMENT}&filtering=${FILTERING}&limit=1000`;
                        
@@ -86,4 +84,3 @@ function requestGetFacebookReport(accountId,spreadSheetUrl,sheetName){
   
   
 }
-
